@@ -14,43 +14,50 @@ public class Main {
         KeyPair keyPair = generateKeyPair();
 
         while (true) {
+            System.out.println("------------------Menu--------------------" +
+                    "\n1. New block" +
+                    "\n2. Search block by Hash" +
+                    "\n3. List all blocks" +
+                    "\n4. Quit");
             System.out.println("Do you want to create a new block? (y / n): ");
             String choice = sc.next();
+            switch (choice) {
+                case "1":
+                    sc.nextLine();
+                    System.out.println("Write data about a transaction: ");
+                    String data = sc.nextLine();
 
-            if (choice.equals("y")) {
-                sc.nextLine();
-                System.out.println("Write data about a transaction: ");
-                String data = sc.nextLine();
+                    // Encrypt the transaction data using the public key
+                    String encryptedData = encrypt(data, keyPair.getPublicKey(), keyPair.getModulus());
 
-                // Encrypt the transaction data using the public key
-                String encryptedData = encrypt(data, keyPair.getPublicKey(), keyPair.getModulus());
+                    // Create a new block with the encrypted transaction data
+                    Block newBlock = new Block(encryptedData);
 
-                // Create a new block with the encrypted transaction data
-                Block newBlock = new Block(encryptedData);
+                    // Set the previous hash if there are previous blocks
+                    if (!blockchain.isEmpty()) {
+                        newBlock.setPreviousHash(blockchain.get(blockchain.size() - 1).getBlockHash());
+                    }
 
-                // Set the previous hash if there are previous blocks
-                if (!blockchain.isEmpty()) {
-                    newBlock.setPreviousHash(blockchain.get(blockchain.size() - 1).getBlockHash());
-                }
+                    // Add the new block to the blockchain
+                    blockchain.add(newBlock);
 
-                // Add the new block to the blockchain
-                blockchain.add(newBlock);
+                    System.out.println("The block was successfully added!");
+                    System.out.println();
+                    break;
+                case "2":
+                    ///sdfsdgsdgsdbdfb
+                    System.out.println("dasd");
+                    break;
+                case "3":
+                    listBlocks(blockchain);
+                    break;
+                case "4":
+                    break;
+                default:
+                    System.out.println("Choose a valid option.");
+                    break;
 
-                System.out.println("The block was successfully added!");
-                System.out.println();
-            } else if (choice.equals("n")) {
-                break;
-            } else {
-                System.out.println("Choose a valid option.");
             }
-        }
-
-        // Display the blockchain
-        System.out.println("Blockchain:");
-        for (Block block : blockchain) {
-            System.out.println("Block Hash: " + block.getBlockHash());
-            System.out.println("Encrypted Transaction: " + block.getTransaction());
-            System.out.println();
         }
     }
 
@@ -71,5 +78,13 @@ public class Main {
         BigInteger message = new BigInteger(messageBytes);
         BigInteger encryptedMessage = message.modPow(publicKey, modulus);
         return encryptedMessage.toString();
+    }
+    private static void listBlocks(ArrayList<Block> blockchain){
+        System.out.println("Blockchain:");
+        for (Block block : blockchain) {
+            System.out.println("Block Hash: " + block.getBlockHash());
+            System.out.println("Encrypted Transaction: " + block.getTransaction());
+            System.out.println();
+        }
     }
 }
