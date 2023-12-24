@@ -6,12 +6,14 @@ public class Block {
 
     private int blockHash;
 
-    public Block(int previousHash, String[] transactions) {
+    public Block(int previousHash, String[] transaction) {
         this.previousHash = previousHash;
         this.transactions = transactions;
 
-        Object[] contens = {Arrays.hashCode(transactions), previousHash};
-        this.blockHash = Arrays.hashCode(contens);
+        Object[] contents = {
+                Arrays.hashCode(transactions), previousHash
+        };
+        this.blockHash = Arrays.hashCode(contents);
     }
 
     public int getPreviousHash() {
