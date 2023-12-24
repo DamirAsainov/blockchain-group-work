@@ -23,4 +23,8 @@ public class Block {
         // Simple hash calculation for educational purposes
         return (transaction + previousHash).hashCode();
     }
+    public void display(){
+        System.out.println("Block Hash: " + getBlockHash() +
+                "\nEncrypted Transaction: " + getTransaction());
+    }
 }
