@@ -6,7 +6,7 @@ public class Block {
 
     private int blockHash;
 
-    public Block(int previousHash, String[] transaction) {
+    public Block(int previousHash, String[] transactions) {
         this.previousHash = previousHash;
         this.transactions = transactions;
 

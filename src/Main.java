@@ -18,7 +18,7 @@ public class Main {
                 sc.nextLine();
                 System.out.println("Write a data about a transaction: ");
                 String data = sc.nextLine();
-                String[] transactions = {data, String.valueOf(date.getDate())};
+                String[] transactions = {data};
 
                 if (blockchain.isEmpty()) {
                     blockchain.add(new Block(0, transactions));
