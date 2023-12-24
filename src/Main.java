@@ -49,7 +49,10 @@ public class Main {
                 case "2":
                     sc.nextLine();
                     System.out.println("Write hash: ");
-                    blockchain.searchBlock(Integer.parseInt(sc.nextLine())).display();
+                    Block block = blockchain.searchBlock(Integer.parseInt(sc.nextLine()));
+                    block.display();
+                    System.out.println("Write private key to decrypt ");
+                    System.out.println(encryption.decrypt(block.getTransaction(),new BigInteger(sc.nextLine()),blockchain.getModulus()));
                     break;
                 case "3":
                     blockchain.listBlocks();

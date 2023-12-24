@@ -37,5 +37,10 @@ public class Blockchain {
 
         // Add the new block to the blockchain
         blocks.add(newBlock);
+        System.out.println("Hash of block - " + newBlock.getBlockHash() +
+                "\nYour private key:\n" + keyPair.getPrivateKey());
+    }
+    public BigInteger getModulus(){
+        return keyPair.getModulus();
     }
 }

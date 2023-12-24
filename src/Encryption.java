@@ -20,4 +20,18 @@ public class Encryption {
         BigInteger encryptedMessage = message.modPow(publicKey, modulus);
         return encryptedMessage.toString();
     }
+
+    public String decrypt(String encryptedText, BigInteger privateKey, BigInteger modulus) {
+        BigInteger encryptedMessage = new BigInteger(encryptedText);
+        BigInteger decryptedMessage = encryptedMessage.modPow(privateKey, modulus);
+
+        // Convert the decrypted BigInteger back to a byte array
+        byte[] decryptedBytes = decryptedMessage.toByteArray();
+
+        // Convert the byte array to a String
+        String decryptedText = new String(decryptedBytes);
+
+        return decryptedText;
+
+    }
 }
