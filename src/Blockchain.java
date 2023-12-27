@@ -27,18 +27,20 @@ public class Blockchain {
     public void addBlock(String data){
         String encryptedData = encryption.encrypt(data, keyPair.getPublicKey(), keyPair.getModulus());
 
-        // Create a new block with the encrypted transaction data
+
         Block newBlock = new Block(encryptedData);
 
-        // Set the previous hash if there are previous blocks
+
         if (!blocks.isEmpty()) {
             newBlock.setPreviousHash(blocks.get(blocks.size() - 1).getBlockHash());
         }
 
-        // Add the new block to the blockchain
+
         blocks.add(newBlock);
         System.out.println("Hash of block - " + newBlock.getBlockHash() +
-                "\nYour private key:\n" + keyPair.getPrivateKey());
+                "\nYour private key:\n" + keyPair.getPrivateKey() + "\nYour public key:\n"
+        + keyPair.getPublicKey())
+        ;
     }
     public BigInteger getModulus(){
         return keyPair.getModulus();

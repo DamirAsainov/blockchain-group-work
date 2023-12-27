@@ -8,7 +8,7 @@ public class Encryption {
         BigInteger q = BigInteger.probablePrime(1024, random);
         BigInteger n = p.multiply(q);
         BigInteger phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
-        BigInteger e = BigInteger.valueOf(65537); // Commonly used public exponent
+        BigInteger e = BigInteger.valueOf(65537);
         BigInteger d = e.modInverse(phi);
 
         return new KeyPair(e, n, d);
@@ -25,13 +25,33 @@ public class Encryption {
         BigInteger encryptedMessage = new BigInteger(encryptedText);
         BigInteger decryptedMessage = encryptedMessage.modPow(privateKey, modulus);
 
-        // Convert the decrypted BigInteger back to a byte array
         byte[] decryptedBytes = decryptedMessage.toByteArray();
 
-        // Convert the byte array to a String
+
         String decryptedText = new String(decryptedBytes);
 
         return decryptedText;
+    }
+    public String sign(String message, BigInteger privateKey, BigInteger modulus) {
+        BigInteger hash = computeHash(message);
 
+
+        BigInteger signature = hash.modPow(privateKey, modulus);
+
+        return signature.toString();
+    }
+
+    public boolean verify(String message, String signature, BigInteger publicKey, BigInteger modulus) {
+        BigInteger receivedSignature = new BigInteger(signature);
+        BigInteger hash = computeHash(message);
+
+        BigInteger computedSignature = receivedSignature.modPow(publicKey, modulus);
+
+        return computedSignature.equals(hash);
+    }
+
+    private BigInteger computeHash(String message) {
+        byte[] messageBytes = message.getBytes();
+        return new BigInteger(messageBytes);
     }
 }

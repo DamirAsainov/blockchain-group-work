@@ -8,9 +8,11 @@ public class Main {
         boolean exit = false;
         Scanner sc = new Scanner(System.in);
         Encryption encryption = new Encryption();
-
-        KeyPair keyPair = encryption.generateKeyPair();
-
+        KeyPair keyPair1 = encryption.generateKeyPair();
+        System.out.println("Write word for future sign");
+        String sign = sc.nextLine();
+        Signature signature = new Signature("lol", keyPair1.getPrivateKey(), keyPair1.getModulus());
+        System.out.println("Your sign word '" + sign + "' saved");
         while (!exit) {
             System.out.println("------------------Menu--------------------" +
                     "\n1. New block" +
@@ -23,7 +25,13 @@ public class Main {
                     sc.nextLine();
                     System.out.println("Write data about a transaction: ");
                     String data = sc.nextLine();
-                    blockchain.addBlock(data);
+                    System.out.println("Write sign word:");
+                    sign = sc.nextLine();
+                    if(signature.verify(sign, keyPair1.getPublicKey(), keyPair1.getModulus())) {
+                        blockchain.addBlock(data);
+                    } else{
+                        System.out.println("Wrong sign!!!!");
+                    }
                     break;
                 case "2":
                     sc.nextLine();
